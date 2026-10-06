@@ -14,6 +14,7 @@ A small, fast detector that tells human-written text from AI-generated text, bui
 | **99% accurate on essays** | 98.8% accuracy, 0.9995 AUROC on essays from topics it never saw in training; 96% on articles |
 | **~30 ms per text** | 50 words on a single 2017 laptop CPU core, no GPU needed |
 | **38 MB** | int8 ONNX model, needs only `onnxruntime`, `tokenizers` and `numpy` |
+| **98.9 AUROC on RAID** | public leaderboard, 672k texts incl. adversarial attacks: catches 95.6% of AI text at a 5% false-positive rate |
 | **Built for casual text too** | 97% accurate on social-media posts; only 6% false alarms on real casual chat messages |
 
 > **Scope of the 99% figure:** it is measured on long-form writing (essays). Across all 11 held-out
@@ -65,7 +66,14 @@ Every test set below was **held out from training**. They include a generator th
 ### RAID leaderboard
 
 <!-- RAID:START -->
-Submitted to the public [RAID leaderboard](https://raid-bench.xyz/leaderboard) ([PR #213](https://github.com/liamdugan/raid/pull/213)). Results are pending the leaderboard's automated evaluation.
+Scored by the public [RAID leaderboard](https://raid-bench.xyz/leaderboard) on its hidden-label test set of 672,000 texts, covering 11 generators, 8 domains and 11 adversarial attacks ([evaluation](https://github.com/liamdugan/raid/pull/213)):
+
+| RAID test set | AUROC | TPR @ 5% FPR | TPR @ 1% FPR |
+|---|---:|---:|---:|
+| **All texts, adversarial attacks included** | **98.94** | **95.61%** | **89.42%** |
+| No adversarial attacks | 99.22 | 96.83% | 92.17% |
+
+*TPR @ x% FPR: the share of AI text caught when only x% of human text is falsely flagged. The model was trained on RAID's training split; no test data was used.*
 <!-- RAID:END -->
 
 ## Speed
